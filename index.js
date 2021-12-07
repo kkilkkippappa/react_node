@@ -2,8 +2,11 @@ const express = require('express')
 const app = express()
 const port = 3000
 const mongoose = require('mongoose')
-const {User} = require('./models/User')
-const bodyparser = require('body-parser')
+const bodyparser = require('body-parser');
+
+const {User} = require('./models/User');
+
+const config = require('./config/key');
 
 // application/x-www-form-urlencoded 형태 분석
 app.use(bodyparser.urlencoded({extended: true}));
@@ -11,7 +14,7 @@ app.use(bodyparser.urlencoded({extended: true}));
 // application/json 분석
 app.use(bodyparser.json());
 
-mongoose.connect('mongodb+srv://subin:choo2o2q1q1@practice.ok2c6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+mongoose.connect(config.mongoURL, {})
 .then(()=> console.log('MongoDB Connected..'))
 .catch((err) => console.log(err))
 
