@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-// 회원가입
+// register route
 app.post('/register', (req, res) => {
   // 회원 가입 할 때 필요한 정보들을 cliendt에서 가져오면
   // 그것들을 데이터베이스에 삽입한다.
