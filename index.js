@@ -18,8 +18,6 @@ mongoose.connect(config.mongoURL, {})
 .then(()=> console.log('MongoDB Connected..'))
 .catch((err) => console.log(err))
 
-// 스키마
-
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -38,6 +36,34 @@ app.post('/register', (req, res) => {
       success: true
     })
   }) 
+})
+
+// login route
+app.post('/login', (req, res) => {
+  
+  // 요청된 이메일이 db에 있는지 확인
+  User.findOne({email: req.body.email}, (err, userInfo) => {
+    if(!userinfo){
+      return res.json({
+        loginSuccess : false, 
+        message: "제공된 이메일에 해당하는 유저가 없습니다."
+      })
+    }
+    // 이메일 있다면, 비밀번호 같은지 확인
+    user.comparePassword(req.body.password, (err, isMatch)=>{
+      if(!isMatch){
+        res.json({login : false, message : '비밀번호가 틀렸습니다.'})
+      }
+      // 비밀번호까지 맞다면 토큰을 생성한다.
+      user.generateToken((err, user) => {
+        
+      })
+
+    })
+
+  })
+
+  
 })
 
 app.listen(port, () => {
